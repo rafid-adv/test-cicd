@@ -30,12 +30,12 @@ jobs:
 #         with:
 #           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 #       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+#       - uses: actions/checkout@v2
+#       - name: Setup .NET
+#         uses: actions/setup-dotnet@v1
+#         with:
+#           dotnet-version: '6.0.x'
+#           include-prerelease: true
 
     #  - name: Build with dotnet
  #       run: dotnet build ./aspnetapp.sln --configuration Release
@@ -83,7 +83,7 @@ jobs:
         shell: pwsh
         run: |
          $temp = '"[{\"portMappings\": [{\"hostPort\": 80,\"protocol\": \"tcp\",\"containerPort\": 80}],\"cpu\": 0, \"memory\": 10,\"image\": \"docker.io/remusadvanced/appmod-devops:0.0.27\",\"name\": \"appmod-cicd-test-ctr\"}]"'
-         aws ecs register-task-definition --runtime-platform operatingSystemFamily="LINUX" --family "appmod-cicd-test" --task-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --execution-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --network-mode "awsvpc" --requires-compatibilities "FARGATE" --cpu 256 --memory 512 --container-definitions '"[{\"portMappings\": [{\"hostPort\": 80,\"protocol\": \"tcp\",\"containerPort\": 80}],\"cpu\": 0, \"memory\": 10,\"image\": \"docker.io/remusadvanced/appmod-devops:0.0.27\",\"name\": \"appmod-cicd-test-ctr\"}]"'
+         aws ecs register-task-definition --runtime-platform operatingSystemFamily="LINUX" --family "appmod-cicd-test" --task-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --execution-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --network-mode "awsvpc" --requires-compatibilities "FARGATE" --cpu 256 --memory 512 --container-definitions '"[{\"portMappings\": [{\"hostPort\": 80,\"protocol\": \"tcp\",\"containerPort\": 80}],\"cpu\": 0, \"memory\": 10,\"image\": \"docker.io/remusadvanced/appmod-devops:0.0.${{secrets.CONTAINER_VERSION}}\",\"name\": \"appmod-cicd-test-ctr\"}]"'
          
          
          
