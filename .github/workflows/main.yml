@@ -81,8 +81,8 @@ jobs:
       - name: Docker build aspnet
         shell: pwsh
         run: | 
-
-         docker build -f "C:\aspnet\Dockerfile" -t remusadvanced/appmod-devops:0.0.${{GITHUB.RUN_NUMBER }} .
+         Write-Host "Workspace " ${{ GITHUB_WORKSPACE }}
+         docker build -f "${{ GITHUB_WORKSPACE}}\Dockerfile" -t remusadvanced/appmod-devops:0.0.${{GITHUB.RUN_NUMBER }} .
          docker login -u "${{ secrets.CONTAINER_REPO_USERNAME }}" -p "${{ secrets.CONTAINER_REPO_PASSWORD }}"
          docker push remusadvanced/appmod-devops:0.0.${{ GITHUB.RUN_NUMBER }}
  
