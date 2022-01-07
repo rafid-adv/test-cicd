@@ -83,4 +83,10 @@ jobs:
         shell: pwsh
         run: |
          cmd
-         aws ecs register-task-definition --runtime-platform operatingSystemFamily="LINUX" --family "appmod-cicd-test" --task-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --execution-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --network-mode "awsvpc" --requires-compatibilities "FARGATE" --cpu 256 --memory 512 --container-definitions ${{ secrets.ECS_TASK_DEFINITION }}
+         aws ecs register-task-definition --runtime-platform operatingSystemFamily="LINUX" --family "appmod-cicd-test" --task-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --execution-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --network-mode "awsvpc" --requires-compatibilities "FARGATE" --cpu 256 --memory 512 --container-definitions "${{ secrets.ECS_TASK_DEFINITION }}"
+         
+         
+         
+         
+         
+         
