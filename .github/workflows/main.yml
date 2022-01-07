@@ -80,7 +80,8 @@ jobs:
 #### Create a task definition in AWS ECS 
 
       - name: Update the task definition
-        shell: cmd
-        run: | 
+        shell: pwsh
+        run: |
+         cmd
          set temp = ${{ secrets.ECS_TASK_DEFINITION }}
          echo %temp%
