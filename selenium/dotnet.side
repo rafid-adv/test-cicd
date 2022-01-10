@@ -1,0 +1,92 @@
+{
+  "id": "cc1058ba-f0c9-4aa6-a9e7-d81e0c1eb677",
+  "version": "2.0",
+  "name": "dotnet",
+  "url": "http://localhost:8000/",
+  "tests": [{
+    "id": "bdb8c749-94d4-4f13-a874-59d4db5c358a",
+    "name": "dotnet1",
+    "commands": [{
+      "id": "1fbcb57d-dc92-4842-b0c4-4bc84784683e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f5747b6-759c-4527-b60d-367aa213fee3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Welcome to .NET')]", "xpath:innerText"]
+      ],
+      "value": "Welcome to .NET"
+    }, {
+      "id": "c03b956f-f398-4787-bcfb-9f7893823dd8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Privacy",
+      "targets": [
+        ["linkText=Privacy", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Privacy')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/Privacy')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Privacy')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "41f6bd95-aefb-47b9-87b3-dcda16a2b87a",
+    "name": "dotnet2",
+    "commands": [{
+      "id": "be747208-eda0-4936-9b5a-40f700e16978",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "756e2bce-d854-4ed8-9eaa-b1b066437bf4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Privacy",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3df4e775-0de5-425a-a04a-c3073d46f3be",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [],
+      "value": "Privacy Policy"
+    }, {
+      "id": "3efe0cec-4dc9-4bb0-8ec0-335d5290c304",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=aspnetapp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1c7ea173-2242-4a86-9077-e2128a79e0af",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=tr:nth-child(1) > td:nth-child(1)",
+      "targets": [],
+      "value": ".NET version"
+    }]
+  }],
+  "suites": [{
+    "id": "fd24806b-6518-423e-8d26-8ba2a9ce98b6",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["bdb8c749-94d4-4f13-a874-59d4db5c358a", "41f6bd95-aefb-47b9-87b3-dcda16a2b87a"]
+  }],
+  "urls": ["http://localhost:8000/"],
+  "plugins": []
+}
