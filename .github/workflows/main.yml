@@ -23,7 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
-      - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2
       
 ############ Dotnet code build ##############                
 #       - name: Setup .NET
@@ -111,17 +111,17 @@ jobs:
 ############ End of AWS ##############  
 
 ############ Selenium ##############  
-      - name: Run Selenium tests       
-        shell: pwsh
-        run: |
-          selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=jest
+#       - name: Run Selenium tests       
+#         shell: pwsh
+#         run: |
+#           selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=jest
 
       
       - name: Publish Report       
         uses: dorny/test-reporter@v1.5.0
         with:
           name: Selenium Tests Report
-          path: ${{github.workspace}}\\selenium\\results\\dotnet.json
+          path: C:\selenium\dotnet\results
           reporter: jest-junit
 
 ############ End of selenium  ##############  
