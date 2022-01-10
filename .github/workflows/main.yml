@@ -121,7 +121,7 @@ jobs:
         uses: dorny/test-reporter@v1.5.0
         with:
           name: Selenium Tests Report
-          path: C:\selenium\dotnet\results
+          path: C:\selenium\dotnet\results\dotnet.json
           reporter: jest-junit
 
 ############ End of selenium  ##############  
