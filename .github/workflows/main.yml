@@ -121,7 +121,7 @@ jobs:
         uses: dorny/test-reporter@v1.5.0
         with:
           name: Selenium Tests Report
-          path: C:\selenium\dotnet\results\dotnet.xml
+          path: C:\GitHubRunner\_work\test-cicd\test-cicd\selenium\results\dotnet.xml
           reporter: java-junit
 
 ############ End of selenium  ##############  
