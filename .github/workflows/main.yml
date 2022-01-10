@@ -109,7 +109,8 @@ jobs:
 ############ End of AWS ##############  
 
 ############ Selenium ##############  
-      - name: Run Selenium tests        
+      - name: Run Selenium tests
+        uses: actions/cache@v1
         with:
           name: Run Selenium tests
           shell: pwsh
