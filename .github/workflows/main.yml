@@ -23,21 +23,42 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
-#       - uses: actions/checkout@v2
+       - uses: actions/checkout@v2
       
 ############ Dotnet code build ##############                
-#       - name: Setup .NET
-#         uses: actions/setup-dotnet@v1
-#         with:
-#           dotnet-version: '6.0.x'
-#           include-prerelease: true
+       - name: Setup .NET
+         uses: actions/setup-dotnet@v1
+         with:
+           dotnet-version: '6.0.x'
+           include-prerelease: true
+
       
-      
-#       - name: Build with dotnet
-#         run: dotnet build ./aspnetapp.sln --configuration Release      
+       - name: Build with dotnet
+         run: dotnet build ./aspnetapp.sln --configuration Release      
 
 ############ End of dotnet code build ##############          
-        
+  
+
+############ Selenium ##############  
+  mytests:
+    needs: build
+    runs-on: self-hosted
+    steps:
+       - name: Run Selenium tests
+         shell: pwsh
+         run: |
+           selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=junit
+
+      
+       - name: Publish Report       
+         uses: dorny/test-reporter@v1.5.0
+         with:
+           name: Selenium Tests Report
+           path: C://GitHubRunner//_work//test-cicd//test-cicd//selenium//results//dotnet.xml
+           reporter: java-junit
+
+############ End of selenium  ##############  
+         
 ############ Sonar Qube ##############          
           
 #       - name: Set up JDK 11
@@ -108,27 +129,7 @@ jobs:
 #         run: |    
 #          aws ecs update-service --cluster appmod-cicd-test  --service appmod-cicd-srv --task-definition appmod-cicd-test
 
-############ End of AWS ##############  
-
-############ Selenium ##############  
-      - name: Run Selenium tests   
-        uses: actions/cache@v1
-        with: 
-          shell: pwsh
-          run: |
-            selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=junit
-
-      
-      - name: Publish Report       
-        uses: dorny/test-reporter@v1.5.0
-        with:
-          name: Selenium Tests Report
-          path: C://GitHubRunner//_work//test-cicd//test-cicd//selenium//results//dotnet.xml
-          reporter: java-junit
-
-############ End of selenium  ##############  
-         
-         
+############ End of AWS ##############           
          
          
          
