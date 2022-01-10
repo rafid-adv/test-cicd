@@ -114,15 +114,15 @@ jobs:
       - name: Run Selenium tests       
         shell: pwsh
         run: |
-          selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=jest
+          selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=junit
 
       
       - name: Publish Report       
         uses: dorny/test-reporter@v1.5.0
         with:
           name: Selenium Tests Report
-          path: C:\selenium\dotnet\results\*.json
-          reporter: jest-junit
+          path: C:\selenium\dotnet\results\*.xml
+          reporter: java-junit
 
 ############ End of selenium  ##############  
          
