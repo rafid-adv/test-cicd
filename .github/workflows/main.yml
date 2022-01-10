@@ -76,31 +76,45 @@ jobs:
 #          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
 ############ END Sonar Qube ##############   
-     
+
+
+############ Docker ##############  
 #### Build Docker image
-      - name: Docker build aspnet
-        shell: pwsh
-        run: | 
-         Write-Host "Workspace " ${{github.workspace}}
-         docker build -f "${{GITHUB.WORKSPACE}}\Dockerfile" -t remusadvanced/appmod-devops:0.0.${{GITHUB.RUN_NUMBER }} .
-         docker login -u "${{ secrets.CONTAINER_REPO_USERNAME }}" -p "${{ secrets.CONTAINER_REPO_PASSWORD }}"
-         docker push remusadvanced/appmod-devops:0.0.${{ GITHUB.RUN_NUMBER }}
- 
-     
+#       - name: Docker build aspnet
+#         shell: pwsh
+#         run: | 
+#          Write-Host "Workspace " ${{github.workspace}}
+#          docker build -f "${{GITHUB.WORKSPACE}}\Dockerfile" -t remusadvanced/appmod-devops:0.0.${{GITHUB.RUN_NUMBER }} .
+#          docker login -u "${{ secrets.CONTAINER_REPO_USERNAME }}" -p "${{ secrets.CONTAINER_REPO_PASSWORD }}"
+#          docker push remusadvanced/appmod-devops:0.0.${{ GITHUB.RUN_NUMBER }}
+         
+ ############ End of Docker ##############  
+
+
+############ AWS ##############  
 #### Create a task definition in AWS ECS 
 
-      - name: Update the task definition
+#       - name: Update the task definition
+#         shell: pwsh
+#         run: |
+#          aws ecs register-task-definition --runtime-platform operatingSystemFamily="LINUX" --family "appmod-cicd-test" --task-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --execution-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --network-mode "awsvpc" --requires-compatibilities "FARGATE" --cpu 256 --memory 512 --container-definitions '"[{\"portMappings\": [{\"hostPort\": 80,\"protocol\": \"tcp\",\"containerPort\": 80}],\"image\": \"docker.io/remusadvanced/appmod-devops:0.0.${{ GITHUB.RUN_NUMBER }}\",\"name\": \"appmod-cicd-test-ctr\"}]"'
+         
+         
+#        #### Update Service in AWS ECS 
+#       - name: Update the task definition
+#         shell: pwsh
+#         run: |    
+#          aws ecs update-service --cluster appmod-cicd-test  --service appmod-cicd-srv --task-definition appmod-cicd-test
+
+############ End of AWS ##############  
+
+############ Selenium ##############  
+      - name: Run Selenium tests
         shell: pwsh
         run: |
-         aws ecs register-task-definition --runtime-platform operatingSystemFamily="LINUX" --family "appmod-cicd-test" --task-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --execution-role-arn "arn:aws:iam::069705096352:role/ecsTaskExecutionRole" --network-mode "awsvpc" --requires-compatibilities "FARGATE" --cpu 256 --memory 512 --container-definitions '"[{\"portMappings\": [{\"hostPort\": 80,\"protocol\": \"tcp\",\"containerPort\": 80}],\"image\": \"docker.io/remusadvanced/appmod-devops:0.0.${{ GITHUB.RUN_NUMBER }}\",\"name\": \"appmod-cicd-test-ctr\"}]"'
-         
-         
-       #### Update Service in AWS ECS 
-      - name: Update the task definition
-        shell: pwsh
-        run: |    
-         aws ecs update-service --cluster appmod-cicd-test  --service appmod-cicd-srv --task-definition appmod-cicd-test
-         
+          selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results
+
+############ End of selenium  ##############  
          
          
          
