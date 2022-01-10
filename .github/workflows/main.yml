@@ -111,10 +111,10 @@ jobs:
 ############ End of AWS ##############  
 
 ############ Selenium ##############  
-#       - name: Run Selenium tests       
-#         shell: pwsh
-#         run: |
-#           selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=jest
+      - name: Run Selenium tests       
+        shell: pwsh
+        run: |
+          selenium-side-runner -c "goog:chromeOptions.args=[--headless,--nogpu] browserName=chrome" ${{github.workspace}}\selenium\dotnet.side --output-directory=${{github.workspace}}\selenium\results --output-format=jest
 
       
       - name: Publish Report       
